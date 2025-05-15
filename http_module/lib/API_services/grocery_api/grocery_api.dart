@@ -1,9 +1,14 @@
-import 'package:http_module/grocery_api/grocery_endpoints.dart';
-import 'package:http_module/grocery_api/grocery_item_dto.dart';
+import 'package:http_module/API_services/grocery_api/grocery_endpoints.dart';
+import 'package:http_module/API_services/grocery_api/grocery_item_dto.dart';
 import 'package:http_module/client/dio_client.dart';
 import 'package:http_module/abstract_client/http_client.dart';
 
 class GroceryApi {
+  static HttpClient _getClient() {
+    // Use the basic HTTP client decorator with default authorization provider
+    return DioHttpClient();
+  }
+
   static Future<String?> addGroceryItem(Map<String, dynamic> body) async {
     final client = DioHttpClient();
     final url = GroceryAPIEndPoints.post.url();
