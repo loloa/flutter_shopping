@@ -76,10 +76,6 @@ class _GroceryListState extends State<GroceryList> {
     } catch (e) {
       AppLog.api.error('Error deleting item: $e');
     }
-
-    // setState(() {
-    //   _items.remove(item);
-    // });
   }
 
   void _addNewitem() async {

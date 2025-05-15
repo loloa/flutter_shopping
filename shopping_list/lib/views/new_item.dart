@@ -3,9 +3,7 @@ import 'package:shopping_list/app_logger.dart';
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/models/category.dart';
 import 'package:shopping_list/models/grocery_item.dart';
-
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:http_module/src.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -27,36 +25,49 @@ class _NewItemState extends State<NewItem> {
       setState(() {
         _isSending = true;
       });
-      final url = Uri.https(
-        'flutter-prep-74de6-default-rtdb.firebaseio.com',
-        'shopping-list.json',
-      );
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode({
+
+      try {
+        final identifier = await GroceryApi.addGroceryItem({
           'name': _enteredName,
           'quantity': _enteredQuantity,
           'category': _selectedCategory.title,
-        }),
-      );
-      AppLog.api.info('Added new item: ${response.body}');
-      AppLog.api.info(response.statusCode.toString());
+        });
 
-      final Map<String, dynamic> responsData = jsonDecode(response.body);
+        if (!context.mounted) {
+          return;
+        }
 
-      if (!context.mounted) {
-        return;
+        Navigator.of(context).pop(
+          identifier != null
+              ? GroceryItem(
+                id: identifier,
+                name: _enteredName,
+                quantity: _enteredQuantity,
+                category: _selectedCategory,
+              )
+              : null,
+        );
+      } catch (e) {
+        AppLog.api.error('Error adding item: $e');
       }
 
-      Navigator.of(context).pop(
-        GroceryItem(
-          id: responsData['name'],
-          name: _enteredName,
-          quantity: _enteredQuantity,
-          category: _selectedCategory,
-        ),
-      );
+      // final url = Uri.https(
+      //   'flutter-prep-74de6-default-rtdb.firebaseio.com',
+      //   'shopping-list.json',
+      // );
+      // final response = await http.post(
+      //   url,
+      //   headers: {'Content-Type': 'application/json'},
+      //   body: json.encode({
+      //     'name': _enteredName,
+      //     'quantity': _enteredQuantity,
+      //     'category': _selectedCategory.title,
+      //   }),
+      // );
+      // AppLog.api.info('Added new item: ${response.body}');
+      // AppLog.api.info(response.statusCode.toString());
+
+      // final Map<String, dynamic> responsData = jsonDecode(response.body);
     }
   }
 
