@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shopping_list/app_logger.dart';
 import 'package:shopping_list/data/categories.dart';
@@ -63,6 +62,26 @@ class _GroceryListState extends State<GroceryList> {
     }
   }
 
+  void _removeItem(GroceryItem item) async {
+    try {
+      final removed = await GroceryApi.deleteGroceryItem(item.id);
+
+      if (removed) {
+        setState(() {
+          _items.remove(item);
+        });
+      } else {
+        AppLog.api.error('Error deleting item');
+      }
+    } catch (e) {
+      AppLog.api.error('Error deleting item: $e');
+    }
+
+    // setState(() {
+    //   _items.remove(item);
+    // });
+  }
+
   void _addNewitem() async {
     final justAddedItem = await Navigator.of(
       context,
@@ -72,12 +91,6 @@ class _GroceryListState extends State<GroceryList> {
     }
     setState(() {
       _items.add(justAddedItem);
-    });
-  }
-
-  void _removeItem(GroceryItem item) {
-    setState(() {
-      _items.remove(item);
     });
   }
 

@@ -66,4 +66,3 @@ class DioHttpClient extends HttpClient {
 final dio = Dio(BaseOptions(connectTimeout: Duration(seconds: 5)));
 final client = DioHttpClient(dio);
 */
-class Testclass {}
