@@ -50,24 +50,6 @@ class _NewItemState extends State<NewItem> {
       } catch (e) {
         AppLog.api.error('Error adding item: $e');
       }
-
-      // final url = Uri.https(
-      //   'flutter-prep-74de6-default-rtdb.firebaseio.com',
-      //   'shopping-list.json',
-      // );
-      // final response = await http.post(
-      //   url,
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: json.encode({
-      //     'name': _enteredName,
-      //     'quantity': _enteredQuantity,
-      //     'category': _selectedCategory.title,
-      //   }),
-      // );
-      // AppLog.api.info('Added new item: ${response.body}');
-      // AppLog.api.info(response.statusCode.toString());
-
-      // final Map<String, dynamic> responsData = jsonDecode(response.body);
     }
   }
 
