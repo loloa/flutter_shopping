@@ -61,5 +61,3 @@ print(response.statusCode);
 print(response.data);
 
 */
-
-class TestClassA {}

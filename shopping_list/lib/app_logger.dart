@@ -33,5 +33,3 @@ AppLog.api.error('Failed to fetch user data');
 AppLog.auth.info('User login successful');
 
 */
-
-class AppLoggertest {}
