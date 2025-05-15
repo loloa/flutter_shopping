@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:http_module/abstract_client/http_client.dart';
+import 'dart:convert';
 
 class HttpDotDartClient extends HttpClient {
   final http.Client _client;
@@ -64,9 +65,17 @@ class HttpDotDartClient extends HttpClient {
         );
         break;
     }
-
+    // Parse JSON response if possible
+    dynamic responseData = httpResponse.body;
+    if (httpResponse.body.isNotEmpty) {
+      try {
+        responseData = jsonDecode(httpResponse.body);
+      } catch (e) {
+        // If not JSON, keep the original body
+      }
+    }
     return HttpResponse(
-      data: httpResponse.body,
+      data: responseData,
       statusCode: httpResponse.statusCode,
       headers: httpResponse.headers,
     );
