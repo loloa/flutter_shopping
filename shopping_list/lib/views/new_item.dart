@@ -37,6 +37,10 @@ class _NewItemState extends State<NewItem> {
           return;
         }
 
+        setState(() {
+          _isSending = false;
+        });
+
         Navigator.of(context).pop(
           identifier != null
               ? GroceryItem(
@@ -48,6 +52,9 @@ class _NewItemState extends State<NewItem> {
               : null,
         );
       } catch (e) {
+        setState(() {
+          _isSending = false;
+        });
         AppLog.api.error('Error adding item: $e');
       }
     }
