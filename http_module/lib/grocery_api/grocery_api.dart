@@ -2,18 +2,21 @@ import 'package:http_module/grocery_api/grocery_endpoints.dart';
 import 'package:http_module/grocery_api/grocery_item_dto.dart';
 import 'package:http_module/client/dio_client.dart';
 import 'package:http_module/abstract_client/http_client.dart';
-import 'dart:convert';
 
 class GroceryApi {
   static Future<String?> addGroceryItem(Map<String, dynamic> body) async {
     final client = DioHttpClient();
     final url = GroceryAPIEndPoints.post.url();
-    final response = await client.request(url.toString(), HttpMethod.post);
+    final response = await client.request(
+      url.toString(),
+      HttpMethod.post,
+      body: body,
+    );
 
     if (response.statusCode < 200 || response.statusCode >= 300) {
       return null;
     }
-    final Map<String, dynamic> json = jsonDecode(response.data);
+    final Map<String, dynamic> json = response.data;
     final identifier = json['name'];
     return identifier;
   }
