@@ -4,6 +4,7 @@ import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/models/grocery_item.dart';
 import 'package:shopping_list/views/new_item.dart';
 import 'package:http_module/src.dart';
+import 'package:shopping_list/api_error_manager.dart';
 
 class GroceryList extends StatefulWidget {
   const GroceryList({super.key});
@@ -54,10 +55,23 @@ class _GroceryListState extends State<GroceryList> {
 
       AppLog.api.info('LOADED ${loadedItems.length} items');
     } catch (e) {
-      setState(() {
-        _error = 'Failed to load items.\nTry again later';
-        _isLoading = false;
-      });
+      final handled = await ApiErrorManager().handleApiError(
+        context,
+        e,
+        onRetry: _loadGroceryItems,
+      );
+      if (!mounted) return;
+      if (!handled) {
+        // Only set error state if not handled by manager
+        setState(() {
+          _error = 'Failed to load items.\nTry again later';
+          _isLoading = false;
+        });
+      } else {
+        setState(() {
+          _isLoading = false;
+        });
+      }
       AppLog.api.error('Error loading grocery items: ${e.toString()}');
     }
   }

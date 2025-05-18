@@ -3,6 +3,8 @@ export 'client/abstract_client/http_client.dart';
 
 // Client implementations
 export 'client/client/dio_client.dart';
+export 'api_error/api_error_bahavior_config.dart';
+export 'api_error/api_error_behavior.dart';
 
 // Grocery API exports
 export 'API_services/grocery_api/grocery_api.dart';
