@@ -100,13 +100,19 @@ class _GroceryListState extends State<GroceryList> {
     });
   }
 
-  static const _emptyStateMessage = Center(
-    child: Text(
-      'Your list is empty...\nUse \' + \' to add a new item.',
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 24, color: Color.fromARGB(255, 147, 229, 250)),
-    ),
-  );
+  Widget _emptyStateMessage() {
+    var center = Center(
+      child: Text(
+        'Your list is empty...\nUse \' + \' to add a new item.',
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 24,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+      ),
+    );
+    return center;
+  }
 
   static const _loadingView = Center(
     child: SizedBox(width: 44, height: 44, child: CircularProgressIndicator()),
@@ -119,7 +125,7 @@ class _GroceryListState extends State<GroceryList> {
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 24,
-          color: Color.fromARGB(255, 147, 229, 250),
+          color: Theme.of(context).colorScheme.error,
         ),
       ),
     );
@@ -156,7 +162,7 @@ class _GroceryListState extends State<GroceryList> {
       return _loadingView;
     }
     if (_items.isEmpty) {
-      return _emptyStateMessage;
+      return _emptyStateMessage();
     }
     return ListView.builder(
       itemCount: _items.length,
