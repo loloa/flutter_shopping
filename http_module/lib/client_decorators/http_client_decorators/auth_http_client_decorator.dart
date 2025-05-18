@@ -1,7 +1,7 @@
 import 'package:http_module/abstract_client/http_client.dart';
 import 'package:http_module/client_decorators/abstract_client_decorator.dart';
-import 'package:http_module/data_providers/abstract_providers/token_provider.dart';
-import 'package:http_module/data_providers/abstract_providers/agent_provider.dart';
+import 'package:http_module/headers_providers/abstract_providers/token_provider.dart';
+import 'package:http_module/headers_providers/abstract_providers/agent_provider.dart';
 
 class AuthHTTPClientDecorator extends HttpClientDecorator {
   final TokenProvider _tokenProvider;

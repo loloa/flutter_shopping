@@ -1,6 +1,6 @@
 import 'package:http_module/abstract_client/http_client.dart';
 import 'package:http_module/client_decorators/abstract_client_decorator.dart';
-import 'package:http_module/data_providers/abstract_providers/auth_provider.dart';
+import 'package:http_module/headers_providers/abstract_providers/auth_provider.dart';
 
 class BasicHTTPClientDecorator extends HttpClientDecorator {
   final AuthorizationProvider _authProvider;

@@ -63,19 +63,29 @@ class _GroceryListState extends State<GroceryList> {
   }
 
   void _removeItem(GroceryItem item) async {
+    final index = _items.indexOf(item);
+
+    setState(() {
+      _items.remove(item);
+    });
+
     try {
       final removed = await GroceryApi.deleteGroceryItem(item.id);
 
-      if (removed) {
-        setState(() {
-          _items.remove(item);
-        });
-      } else {
-        AppLog.api.error('Error deleting item');
+      if (!removed) {
+        _undo(index, item);
       }
     } catch (e) {
       AppLog.api.error('Error deleting item: $e');
+      _undo(index, item);
     }
+  }
+
+  void _undo(int index, GroceryItem item) {
+    AppLog.api.error('Error deleting item');
+    setState(() {
+      _items.insert(index, item);
+    });
   }
 
   void _addNewitem() async {

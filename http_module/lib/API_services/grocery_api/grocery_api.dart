@@ -2,15 +2,16 @@ import 'package:http_module/API_services/grocery_api/grocery_endpoints.dart';
 import 'package:http_module/API_services/grocery_api/grocery_item_dto.dart';
 import 'package:http_module/client/dio_client.dart';
 import 'package:http_module/abstract_client/http_client.dart';
+// 
 
 class GroceryApi {
   static HttpClient _getClient() {
     // Use the basic HTTP client decorator with default authorization provider
-    return DioHttpClient();
+    return DioHttpClient(); // HttpDotDartClient(); // DioHttpClient();
   }
 
   static Future<String?> addGroceryItem(Map<String, dynamic> body) async {
-    final client = DioHttpClient();
+    final client = _getClient();
     final url = GroceryAPIEndPoints.post.url();
     final response = await client.request(
       url.toString(),
@@ -27,14 +28,14 @@ class GroceryApi {
   }
 
   static Future<bool> deleteGroceryItem(String itemId) async {
-    final client = DioHttpClient();
+    final client = _getClient();
     final url = GroceryAPIEndPoints.delete.url(itemId: itemId);
     final response = await client.request(url.toString(), HttpMethod.delete);
     return (response.statusCode >= 200 && response.statusCode < 300);
   }
 
   static Future<List<GroceryItemDTO>> getGroceryItems() async {
-    final client = DioHttpClient();
+    final client = _getClient();
     final url = GroceryAPIEndPoints.get.url();
 
     final response = await client.request(url.toString(), HttpMethod.get);
