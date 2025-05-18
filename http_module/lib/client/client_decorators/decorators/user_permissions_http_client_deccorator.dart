@@ -1,6 +1,6 @@
-import 'package:http_module/abstract_client/http_client.dart';
-import 'package:http_module/client_decorators/abstract_client_decorator.dart';
-import 'package:http_module/client_decorators/http_client_decorators/auth_http_client_decorator.dart';
+import 'package:http_module/client/abstract_client/http_client.dart';
+import 'package:http_module/client/client_decorators/abstract_client_decorator.dart';
+import 'package:http_module/client/client_decorators/decorators/auth_http_client_decorator.dart';
 import 'package:http_module/headers_providers/abstract_providers/user_access_provider.dart';
 
 class UserPermissionsHTTPClientDecorator extends HttpClientDecorator {

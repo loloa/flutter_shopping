@@ -1,5 +1,5 @@
-import 'package:http_module/abstract_client/http_client.dart';
-import 'package:http_module/client_decorators/abstract_client_decorator.dart';
+import 'package:http_module/client/abstract_client/http_client.dart';
+import 'package:http_module/client/client_decorators/abstract_client_decorator.dart';
 import 'package:http_module/headers_providers/abstract_providers/token_provider.dart';
 import 'package:http_module/headers_providers/abstract_providers/agent_provider.dart';
 

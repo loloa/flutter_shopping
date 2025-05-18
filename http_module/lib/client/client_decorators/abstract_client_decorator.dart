@@ -1,4 +1,4 @@
-import 'package:http_module/abstract_client/http_client.dart';
+import 'package:http_module/client/abstract_client/http_client.dart';
 
 abstract class HttpClientDecorator extends HttpClient {
   final HttpClient _decoratee;
@@ -6,7 +6,7 @@ abstract class HttpClientDecorator extends HttpClient {
   HttpClientDecorator(this._decoratee);
 
   @override
-  Future<HttpResponse<dynamic>> request(
+  Future<HttpResponse<dynamic>> performRequest(
     String endpoint,
     HttpMethod method, {
     Map<String, dynamic>? params,

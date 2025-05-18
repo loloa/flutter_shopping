@@ -1,8 +1,8 @@
 // Abstract client exports
-export 'abstract_client/http_client.dart';
+export 'client/abstract_client/http_client.dart';
 
 // Client implementations
-export 'client/dio_client.dart';
+export 'client/client/dio_client.dart';
 
 // Grocery API exports
 export 'API_services/grocery_api/grocery_api.dart';

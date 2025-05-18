@@ -58,7 +58,7 @@ class _GroceryListState extends State<GroceryList> {
         _error = 'Failed to load items.\nTry again later';
         _isLoading = false;
       });
-      AppLog.api.error('Error loading grocery items: $e');
+      AppLog.api.error('Error loading grocery items: ${e.toString()}');
     }
   }
 
