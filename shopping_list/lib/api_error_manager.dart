@@ -3,6 +3,8 @@ import 'package:http_module/src.dart';
 
 class ApiErrorManager {
   static final ApiErrorManager _instance = ApiErrorManager._internal();
+  bool _isShowingDialog = false;
+  bool _isShowingSnackbar = false;
 
   factory ApiErrorManager() => _instance;
 
@@ -18,11 +20,17 @@ class ApiErrorManager {
 
     switch (error.behavior) {
       case ApiErrorBehavior.showMessage:
+        if (_isShowingSnackbar) return true;
         _showErrorMessage(context, error);
         return true;
 
       case ApiErrorBehavior.requestCode:
+        if (_isShowingDialog) return true;
+
+        _isShowingDialog = true;
         final code = await _showAuthCodeDialog(context);
+        _isShowingDialog = false;
+
         if (code != null && code.isNotEmpty && onRetry != null) {
           // Set auth code in your auth service here if needed
           onRetry();
@@ -41,9 +49,18 @@ class ApiErrorManager {
             ? 'Access forbidden. You don\'t have permission.'
             : error.message;
 
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    _isShowingSnackbar = true;
+
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          SnackBar(
+            content: Text(message),
+            onVisible: () => _isShowingSnackbar = true,
+            dismissDirection: DismissDirection.down,
+          ),
+        )
+        .closed
+        .then((_) => _isShowingSnackbar = false);
   }
 
   Future<String?> _showAuthCodeDialog(BuildContext context) async {
